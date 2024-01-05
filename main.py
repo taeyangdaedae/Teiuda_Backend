@@ -13,7 +13,5 @@ class Item(BaseModel):
     name : str
     number : int
 
-@app.get("/")
-async def first_get():
-    example = session.query(Test).all()
-    return example
+async def root():
+    return {"message":"say hello"}
