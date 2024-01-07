@@ -21,7 +21,7 @@ class UserCreate(BaseModel):
         return v
 
 class Usertoken(BaseModel):
-    access_toekn : str
+    access_token : str
     token_type: str
     userid: str
 
