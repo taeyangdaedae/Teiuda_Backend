@@ -31,3 +31,22 @@ def get_existing_user(db: Session, user_create: UserCreate):
 
 def get_user(db: Session, username: str):
     return db.query(User).filter(User.name == username).first()
+    
+    
+def doublecheckid(db: Session, userid: str):
+    result = db.query(User).filter(User.id == userid).first()
+    
+    if result:
+        return True
+    else:
+        return False
+
+
+def doublecheckemail(db: Session, useremail: str):
+    result = db.query(User).filter(User.email == useremail).first()
+    
+    if result:
+        return True
+    else:
+        return False
+

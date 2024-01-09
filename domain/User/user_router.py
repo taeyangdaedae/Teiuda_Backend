@@ -23,7 +23,7 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60*24
 
 
-@router.post("/signup", status_code=status.HTTP_204_NO_CONTENT)
+@router.post("/signup", status_code=status.HTTP_201_CREATED)
 def user_create(_user_create: user_schema.UserCreate, db: Session = Depends(get_db)):
     user = user_crud.get_existing_user(db, user_create=_user_create)
     if user:
@@ -54,3 +54,26 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
         "token_type": "bearer",
         "userid": user_dict.name
     }
+
+@router.get("/check/{userid}", status_code=status.HTTP_200_OK)
+def double_check_id(userid: str,db: Session = Depends(get_db)):
+    result = user_crud.doublecheckid(db, userid)
+    if result == True:
+        raise HTTPException(status_code=409, detail="id already exist")
+    else:
+        return{
+            "id" : userid
+        }
+        
+        
+@router.get("/check/{useremail}", status_code=status.HTTP_200_OK)
+def double_check_email(useremail: str,db: Session = Depends(get_db)):
+    result = user_crud.doublecheckemail(db, useremail)
+    if result == True:
+        raise HTTPException(status_code=409, detail="id already exist")
+    else:
+        return{
+            "email" : useremail
+        }
+        
+        

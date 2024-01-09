@@ -24,4 +24,3 @@ class Usertoken(BaseModel):
     access_token : str
     token_type: str
     userid: str
-
